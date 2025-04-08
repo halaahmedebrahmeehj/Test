@@ -1,0 +1,50 @@
+
+import re
+
+def lexical_analyzer(input_string):
+    tokens = []
+    i = 0
+    while i < len(input_string):
+        char = input_string[i]
+        if char.isdigit():
+            j = i
+            while j < len(input_string) and input_string[j].isdigit():
+                j += 1
+            tokens.append(('INT_LIT', input_string[i:j]))
+            i = j
+        elif char.isalpha():
+            j = i
+            while j < len(input_string) and input_string[j].isalpha():
+                j += 1
+            tokens.append(('IDENT', input_string[i:j]))
+            i = j
+        elif char == '+':
+            tokens.append(('ADD_OP', char))
+            i += 1
+        elif char == '-':
+            tokens.append(('SUB_OP', char))
+            i += 1
+        elif char == '*':
+            tokens.append(('MULT_OP', char))
+            i += 1
+        elif char == '/':
+            tokens.append(('DIV_OP', char))
+            i += 1
+        elif char == '=':
+            tokens.append(('ASSIGN_OP', char))
+            i += 1
+        elif char == '(':
+            tokens.append(('LEFT_PAREN', char))
+            i += 1
+        elif char == ')':
+            tokens.append(('RIGHT_PAREN', char))
+            i += 1
+        elif char.isspace():
+            i += 1
+        else:
+            i += 1
+    return tokens
+
+input_string = "x = 5 + y * (3 - 1)"
+result = lexical_analyzer(input_string)
+print(result)
